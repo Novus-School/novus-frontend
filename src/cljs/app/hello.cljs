@@ -1,5 +1,6 @@
 (ns app.hello
-  (:require [reagent.core :as r]))
+  (:require [reagent.core :as r]
+            ["/components/Button/Button" :refer [Button]]))
 
 (defn click-counter [click-count]
   [:div
@@ -14,4 +15,5 @@
   [:<>
    [:p "Hello, fungus-client is running!"]
    [:p "Here's an example of using a component with state:"]
+   [:> Button {:title "Hello TSX"}]
    [click-counter click-count]])
