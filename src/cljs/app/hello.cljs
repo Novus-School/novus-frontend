@@ -1,6 +1,6 @@
 (ns app.hello
   (:require [reagent.core :as r]
-            ["/components/Button/Button" :refer [Button]]))
+            ["/components/ui/Button" :refer [Button]]))
 
 (defn click-counter [click-count]
   [:div

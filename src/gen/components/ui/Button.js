@@ -14,7 +14,7 @@ var _jsxRuntime = require("react/jsx-runtime");
 var ButtonComponent = function ButtonComponent(props) {
   return /*#__PURE__*/(0, _jsxRuntime.jsx)("button", {
     style: {
-      backgroundColor: "green"
+      backgroundColor: "orange"
     },
     children: props.title
   });

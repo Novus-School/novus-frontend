@@ -2,7 +2,7 @@ import React from 'react'
 
 const ButtonComponent = (props) => {
     return (
-        <button style={{backgroundColor: "green"}}>
+        <button style={{backgroundColor: "orange"}}>
             {props.title}
         </button>
     )

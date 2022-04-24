@@ -1,71 +1,174 @@
-This project was bootstrapped with [Create CLJS App](https://github.com/filipesilva/create-cljs-app).
+# Fungus - Next Generation Learning Management Platform
 
-## Available Scripts
+## Part A - Frontend Integration
 
-In the project directory, you can run:
+### TypeScript Setup
 
-### `yarn start`
 
-Runs the app in development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-The page will reload if you make edits.
+#### Step 1: Install + Configure Babel
 
-The app uses [Reagent](https://reagent-project.github.io), a minimalistic interface between ClojureScript and React.<br>
-You can use existing npm React components directly via a [interop call](http://reagent-project.github.io/docs/master/InteropWithReact.html#creating-reagent-components-from-react-components).
+```sh
+yarn add @babel/runtime@7.15.4
+```
 
-Builds use [Shadow CLJS](https://github.com/thheller/shadow-cljs) for maximum compatibility with NPM libraries. You'll need a [Java SDK](https://adoptopenjdk.net/) (Version 8+, Hotspot) to use it. <br>
-You can [import npm libraries](https://shadow-cljs.github.io/docs/UsersGuide.html#js-deps) using Shadow CLJS. See the [user manual](https://shadow-cljs.github.io/docs/UsersGuide.html) for more information.
+```sh
+yarn add @babel/cli@7.15.4 @babel/core@7.15.0 @babel/plugin-proposal-class-properties@7.14.5 @babel/plugin-proposal-object-rest-spread@7.15.6 @babel/plugin-proposal-private-methods@7.14.5 @babel/plugin-proposal-private-property-in-object@7.15.4 @babel/plugin-transform-runtime@7.15.0 @babel/preset-env@7.15.6 @babel/preset-react@7.14.5 @babel/preset-typescript@7.15.0 babel-loader@8.2.2 babel-plugin-module-resolver@4.1.0 babel-plugin-styled-components@1.13.2 babel-plugin-transform-imports@2.0.0 -D
 
-### `yarn cards`
+```
 
-Runs the interactive live development enviroment.<br>
-You can use it to design, test, and think about parts of your app in isolation.
+Create `babel.config.js`
 
-This environment uses [Devcards](https://github.com/bhauman/devcards) and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro).
+```js
+    const { existsSync, lstatSync } = require("fs");
+    const { resolve, dirname } = require("path");
 
-### `yarn build`
+    function isRelativeImport(path){
+    return path.startsWith(".");
+    }
 
-Builds the app for production to the `public` folder.<br>
-It correctly bundles all code and optimizes the build for the best performance.
+    function isDirectory(path) {
+    return existsSync(path) && lstatSync(path).isDirectory();
+    }
 
-Your app is ready to be deployed!
+    function resolveImport (from, to) {
+    return resolve(dirname(from), to);
+    }
 
-## Other useful scripts
+    function replaceDirectoryImports() {
+    return {
+        visitor: {
+        ImportDeclaration: (path, state) => {
+            const importPath = path.node.source.value;
+            const fileName = state.file.opts.filename;
+            if (isRelativeImport(importPath) && isDirectory(resolveImport(fileName, importPath))) {
+            path.node.source.value += "/index";
+            }
+        }
+        }
+    }
+    }
 
-### `null` and `yarn e2e`
 
-You can use `null` to run tests a single time, and `yarn e2e` to run the end-to-end test app.
-`yarn test` launches tests in interactive watch mode.<br>
+    // This config will output files to ./src/gen/components via the `yarn components` script
+    // See https://shadow-cljs.github.io/docs/UsersGuide.html#_javascript_dialects
+    module.exports = {
+    presets: [
+        "@babel/env",
+        // Compile tsx files.
+        "@babel/preset-typescript",
+        // Use the react runtime import if available.
+        ["@babel/preset-react", {"runtime": "automatic"}]
+    ],
+    plugins: [
+        // Add /index to all relative directory imports, because Shadow-CLJS does not support
+        // them (https://github.com/thheller/shadow-cljs/issues/841#issuecomment-777323477)
+        // NB: Putting these files in node_modules would have fixed the directory imports
+        // but broken hot reload (https://github.com/thheller/shadow-cljs/issues/764#issuecomment-663064549)
+        replaceDirectoryImports,
+        // Allow using @/ for root relative imports in the component library.
+        ["module-resolver", {alias: {"@": "./src/js/components"}}],
+        // Transform material-ui imports into deep imports for faster reload.
+        // material-ui is very big, and importing it all can slow down development rebuilds by a lot.
+        // https://material-ui.com/guides/minimizing-bundle-size/#development-environment
+        ["transform-imports", {
+        "@material-ui/core": {
+            transform: "@material-ui/core/esm/${member}",
+            preventFullImport: true
+        },
+        "@material-ui/icons": {
+            transform: "@material-ui/icons/esm/${member}",
+            preventFullImport: true
+        }
+        }],
+        // Our build doesn't need the {loose: true} option, but if not included it wil
+        // show a lot of warnings on the storybook build.
+        ["@babel/proposal-class-properties", {loose: true}],
+        ["@babel/proposal-object-rest-spread", {loose: true}],
+        // Used only by storybook, but must be included to avoid build warnings/errors.
+        ["@babel/plugin-proposal-private-methods", {loose: true}],
+        ["@babel/plugin-proposal-private-property-in-object", {loose: true}],
+        // Import helpers from @babel/runtime instead of duplicating them everywhere.
+        "@babel/plugin-transform-runtime",
+        // Better debug information for styled components.
+        // https://styled-components.com/docs/tooling#babel-plugin
+        "babel-plugin-styled-components"
+    ],
+    // Do not apply this babel config to node_modules.
+    // Shadow-CLJS also runs babel over node_modules and we don't want this
+    // configuration to apply to it.
+    // We still want it to be picked up by storybook though.
+    exclude: ["node_modules"]
+    }
 
-See the ClojureScript [testing page](https://clojurescript.org/tools/testing) for more information. E2E tests use [Taiko](https://github.com/getgauge/taiko) to interact with a headless browser.
+```
 
-### `yarn lint` and `yarn format`
 
-`yarn lint` checks the code for known bad code patterns using [clj-kondo](https://github.com/borkdude/clj-kondo).
+#### Step 2: Install + Configure TypeScript
 
-`yarn format` will format your code in a consistent manner using [zprint-clj](https://github.com/clj-commons/zprint-clj).
+```sh
+yarn add typescript@4.3.5 -D
 
-### `yarn report`
+```
 
-Make a report of what files contribute to your app size.<br>
-Consider [code-splitting](https://code.thheller.com/blog/shadow-cljs/2019/03/03/code-splitting-clojurescript.html) or using smaller libraries to make your app load faster.
+Create `tsconfig.json`
+```json
+    {
+        "compilerOptions": {
+            "target": "es2015",
+            "module": "commonjs",
+            "jsx": "react-jsx",
+            "importHelpers": true,
+            "strict": false,
+            "esModuleInterop": true,
+            "skipLibCheck": true,
+            "noEmit": true,
+            "rootDir": "src/js/components/",
+            "baseUrl": "src/js/components",
+            "paths": {
+                "@/*": [
+                    "./*"
+                ]
+            }
+        },
+        "include": [
+            "src/js/components/**/*.tsx",
+            "src/js/components/**/*.ts"
+        ]
+    }
+```
 
-### `yarn server`
+#### Step 3: Convert to deps.edn file
 
-Starts a Shadow CLJS background server.<br>
-This will speed up starting time for other commands that use Shadow CLJS.
 
-## Useful resources
+#### Step 4: Add scripts to compile typescript => JS
 
-Clojurians Slack http://clojurians.net/.
+4.1 Install concurrently
+```sh
+yarn add concurrently@6.5.1 -D
+```
 
-CLJS FAQ (for JavaScript developers) https://clojurescript.org/guides/faq-js.
+4.2 Update `package.json`
+```json
+    {
+        "scripts": {
+            "components": "npx babel ./src/js/components/ --extensions .ts,.tsx --out-dir ./src/gen/components/",
+            "components:watch": "yarn components --watch",
+            "dev": "yarn components && concurrently \"yarn components:watch\" \"yarn start\"",
+        }
+    }
+```
 
-Official CLJS API https://cljs.github.io/api/.
+#### Step 5: Create random component to test
 
-Quick reference https://cljs.info/cheatsheet/.
 
-Offline searchable docs https://devdocs.io/.
+#### Step 6: Start dev server
 
-VSCode plugin https://github.com/BetterThanTomorrow/calva.
+```sh
+yarn dev
 
+```
+
+#### Step 7: Use JS component in ClojureScript App
+
+
+#### Step 8: Upgrade react to v17
