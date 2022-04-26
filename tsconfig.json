@@ -8,8 +8,8 @@
         "esModuleInterop": true,
         "skipLibCheck": true,
         "noEmit": true,
-        "rootDir": "src/js/components/",
-        "baseUrl": "src/js/components",
+        "rootDir": "src/js/",
+        "baseUrl": "src/js",
         "paths": {
             "@/*": [
                 "./*"
@@ -17,7 +17,7 @@
         }
     },
     "include": [
-        "src/js/components/**/*.tsx",
-        "src/js/components/**/*.ts"
+        "src/js/**/*.tsx",
+        "src/js/**/*.ts"
     ]
 }
