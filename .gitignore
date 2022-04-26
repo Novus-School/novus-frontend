@@ -9,3 +9,4 @@ report.html
 .cpcache
 .clj-kondo
 .vscode
+public/css/style.css
