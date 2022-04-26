@@ -27,8 +27,12 @@
        [:nav.mb-8
         [:h1.font-600 "novus"]]
        [:div.my-16
-        [:h1.uppercase "Where Kids learn to"
-         [:strong.block "solve problems together"]]
-        [:> Button {:title (if @is-alert-open "Close" "Open")
-                    :onClick #(reset! is-alert-open (not @is-alert-open))}]
-        [:f> custom-hooks-counter]]])))
+        [:h1.uppercase.text-6xl "Where developers"
+         [:span.block " become "]
+         [:strong.block "problem solvers"]]
+        [:div.my-8
+         [:h3.text-2xl.font-light "novus challenges curious learners through "
+          [:strong.font-medium "complex games and simulations"]]
+         [:> Button {:title "Get Started"}]]
+        [:div.my-16
+         [:h1.uppercase. "Why novus?"]]]])))
