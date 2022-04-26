@@ -21,15 +21,14 @@
 (defn main-view []
   (let [is-alert-open (r/atom false)]
     (fn []
-      [:div.m-8
-       [:> Alert {:message "You lost, the word was"
+      [:div.m-12
+       [:> Alert {:message "Welcome to novus"
                   :isOpen @is-alert-open}]
        [:nav.mb-8
         [:h1.font-600 "novus"]]
        [:div.my-16
         [:h1.uppercase "Where Kids learn to"
          [:strong.block "solve problems together"]]
-
         [:> Button {:title (if @is-alert-open "Close" "Open")
                     :onClick #(reset! is-alert-open (not @is-alert-open))}]
         [:f> custom-hooks-counter]]])))
