@@ -37,8 +37,14 @@ Clone the repository and perform the following command line actions:
 $ git clone https://github.com/learnuidev/tailwind-typescript-clojurescript-example.git
 $ cd tailwind-typescript-clojurescript-example
 $ yarn
-$ yarn dev
+$ yarn start
 ```
+
+This will do three things
+
+1. Tell babel to watch for changes in typescript files
+2. Tell tailwind to watch for tailwind related things
+3. Start the development server in port 3000
 
 
 open http://localhost:3000 in browser.

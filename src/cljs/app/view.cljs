@@ -6,7 +6,7 @@
 
 (js/console.log useState)
 
-(defn hooks-counter []
+(defn custom-hooks-counter []
   (let [[count set-count] (useState 0)
         set-counter (useCallback
                      (fn [] (set-count (inc count)))
@@ -18,21 +18,17 @@
       "Inc"]]))
 
 
-(defn click-counter [click-count]
-  [:div
-   "The atom " [:code "click-count"] " has value: "
-   @click-count ". "
-   [:input {:type "button" :value "Click me!"
-            :on-click #(swap! click-count inc)}]])
-
-(def click-count (r/atom 0))
-
 (defn main-view []
-  [:<>
-   [:p "Hello, fungus-client is running!"]
-   [:p "Here's an example of using a component with state:"]
-   [:> Alert {:message "You lost, the word was"
-              :isOpen true}]
-   [:> Button {:title "Hello TSX"}]
-   [:f> hooks-counter]
-   [click-counter click-count]])
+  (let [is-alert-open (r/atom false)]
+    (fn []
+      [:div.m-8
+       [:nav.mb-8
+        [:h1.font-600 "novus"]]
+       [:div.my-16
+        [:h1.uppercase "Where Kids learn to"
+         [:strong.block "solve problems together"]]
+        [:> Alert {:message "You lost, the word was"
+                   :isOpen @is-alert-open}]
+        [:> Button {:title (if @is-alert-open "Close" "Open")
+                    :onClick #(reset! is-alert-open (not @is-alert-open))}]
+        [:f> custom-hooks-counter]]])))

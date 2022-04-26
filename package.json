@@ -5,10 +5,11 @@
   "scripts": {
     "components": "npx babel ./src/js/ --extensions .ts,.tsx --out-dir ./src/gen/",
     "components:watch": "yarn components --watch",
-    "dev": "yarn components && concurrently \"yarn components:watch\" \"yarn start\"",
+    "start": "yarn components && concurrently \"yarn components:watch\" \"yarn dev\"  \"yarn style\"",
+    "style": "npx tailwindcss -i ./tailwind.css -o ./public/css/style.css --watch",
     "sc": "shadow-cljs",
     "server": "shadow-cljs stop && shadow-cljs start",
-    "start": "shadow-cljs watch app",
+    "dev": "shadow-cljs watch app",
     "cards": "shadow-cljs watch cards",
     "build": "yarn clean && shadow-cljs release app",
     "test": "shadow-cljs compile test && node out/test.js",
