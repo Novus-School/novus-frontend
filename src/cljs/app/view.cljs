@@ -19,9 +19,10 @@
   [:nav.mb-8.flex.justify-between.items-stretch
    [:h1.font-600 "novus"]
    [:div.flex.grid-gap-2
-    [:p.mx-4 "courses"]
-    [:p.mx-4 "login"]
-    [:p.mx-4 "register"]]])
+    [:p.mx-4 "principles"]
+    [:p.mx-4 "mental model"]
+    [:p.mx-4 "mentors"]
+    [:p.mx-4 "login"]]])
 
 (defn splash-page []
   [:div.my-16
@@ -39,20 +40,32 @@
 (defn why-novus []
   [:div.my-16
    [:div.grid.place-items-center
-    [:h1.uppercase.text-2xl "Our Learning Goals"]]
-   [:p.italic.my-8 "The key to mastery and long term skills is focusing on principals. We designed our curriculum with the following learning goals."]
-   [:div.grid.grid-cols-2.gap-4.place-items-center
+    [:h1.uppercase.text-2xl "Our Learning Goals"]
+    [:p.italic.my-4 "The key to mastery and long term skills is focusing on principals. We designed our curriculum with the following learning goals."]]
+   [:div.grid.grid-cols-2.gap-4.place-items-center.my-16
     [:p "focus on " [:span.font-bold "principles"] ", not " [:span.italic "\"best practices\""]]
     [:p "build a strong learning foundation"]
     [:p "practice " [:span.font-bold "error driven development"]]
     [:p "learn like a " [:span.font-bold "mechanic"]]
     [:p "learn to solve problems  " [:span.font-bold "collaboratively"]]
-    [:p "soratic method - learn to question " [:span.font-bold "everything"]]
+    [:p "socratic method - learn to question " [:span.font-bold "everything"]]
     [:p "learn to actively chellange the " [:span.font-bold "status quo"]]
     [:p "be curious, be " [:span.font-bold "self critical"]]
     [:p "become code literate - master the art of reading any codebase"]
     [:p "learn to " [:span.font-bold "think in data"]]
-    [:p "learn to " [:span.font-bold "thinking in/about systems"]]]])
+    [:p "learn to " [:span.font-bold "think in systems"]]]])
+
+;;
+(defn our-approach []
+  [:div.my-16
+   [:div.grid.place-items-center
+    [:h1.uppercase.text-2xl "Our Approach"]
+    [:p.italic.my-4 "The key to mastery and long term skills is focusing on principals. We designed our curriculum with the following learning goals."]]
+   [:div.grid.place-items-center.my-8
+    [:p "1 - Master the " [:span.font-bold "Fundamentals"]]
+    [:p "2 - Complete the Virtual Internships"]
+    [:p "3 - Complete the CapStone"]]])
+
 
 (defn fundamentals []
   [:div.my-16
@@ -63,19 +76,19 @@
    [:div.grid.gap-8.grid-cols-2.my-8
     [:div
      [:h4.text-xl "Module 1 - Computing: Past, Present and Future 🎓"]
-     [:p "spicyness: " [:strong "🌶️🌶️🌶️🌶️"]]
+     [:p "spicyness: " [:strong "🌶️🌶️"]]
      [:p "difficulty: " [:strong "😀 💪"]]
      [:p "prequesites: " [:strong " none"]]
      [:p "time: " [:strong "2~4 months"]]]
     [:div
      [:h4.text-xl "Module 2 - What is Software Engineering?"]
-     [:p "spicyness: " [:strong "🌶️🌶️🌶️🌶️"]]
+     [:p "spicyness: " [:strong "🌶️🌶️"]]
      [:p "difficulty: " [:strong "😀 💪"]]
      [:p "prequesites: " [:strong " none"]]
      [:p "time: " [:strong "2~4 months"]]]
     [:div
      [:h4.text-xl "Module 3 - HTML and CSS"]
-     [:p "spicyness: " [:strong "🌶️🌶️🌶️🌶️"]]
+     [:p "spicyness: " [:strong "🌶️"]]
      [:p "difficulty: " [:strong "😀 💪"]]
      [:p "prequesites: " [:strong " none"]]
      [:p "time: " [:strong "2~4 months"]]]
@@ -87,7 +100,7 @@
      [:p "time: " [:strong "2~4 months"]]]
     [:div
      [:h4.text-xl "Module 5 - Thinking in Data: Introduction"]
-     [:p "spicyness: " [:strong "🌶️🌶️🌶️🌶️"]]
+     [:p "spicyness: " [:strong "🌶️🌶️🌶️🌶️🌶️"]]
      [:p "difficulty: " [:strong "😀 💪"]]
      [:p "prequesites: " [:strong " none"]]
      [:p "time: " [:strong "2~4 months"]]]
@@ -99,7 +112,13 @@
      [:p "time: " [:strong "2~4 months"]]]
     [:div
      [:h4.text-xl "Module 7 - Database 101"]
-     [:p "spicyness: " [:strong "🌶️🌶️🌶️🌶️"]]
+     [:p "spicyness: " [:strong "🌶️🌶️🌶️🌶️🌶️"]]
+     [:p "difficulty: " [:strong "😀 💪"]]
+     [:p "prequesites: " [:strong " none"]]
+     [:p "time: " [:strong "2~4 months"]]]
+    [:div
+     [:h4.text-xl "Module 8 - PLOP"]
+     [:p "spicyness: " [:strong "🌶️🌶️🌶️🌶️🌶️"]]
      [:p "difficulty: " [:strong "😀 💪"]]
      [:p "prequesites: " [:strong " none"]]
      [:p "time: " [:strong "2~4 months"]]]]])
@@ -108,7 +127,7 @@
   [:div.my-16
    [:div.grid.place-items-center
     [:h1.uppercase.font-800.text-2xl "Startup Engineer Intern Series"]
-    [:h3.my-4.italic.font-bold "this series simulates what a typical university student their software engineering intership journey "]
+    [:h3.my-4.italic.font-bold "this series simulates what a typical university student experiences in their software engineering intership journey"]
     [:p.my-4 "Duration: " [:strong "16 - 20 months"]]
     [:p "skills you will pick up: " [:strong "how to read code, how to make simple 2d games, vectors, matrices, browsers events system, html, javascript, css, typescript, github, remote working and much much more"]]]
    [:div.grid.gap-8.grid-cols-2.my-8
@@ -150,7 +169,7 @@
   [:div.my-16
    [:div.grid.place-items-center
     [:h1.uppercase.font-800.text-2xl "Capstone Project - Building own startup"]
-    [:h3.my-4.italic.font-bold "this series simulates what a typical university student their software engineering intership journey "]
+    [:h3.my-4.italic.font-bold "in this project, student will work with a team to come up with their own startup idea"]
     [:p.my-4 "Duration: " [:strong "6 months"]]]])
 
 
@@ -159,6 +178,7 @@
   [nav-bar]
   [splash-page]
   [why-novus]
+  [our-approach]
   [fundamentals]
   [startup-simulations]
   [capstone-project]])
