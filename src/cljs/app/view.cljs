@@ -2,7 +2,8 @@
   (:require [reagent.core :as r]
             ["/components/Button" :refer [Button]]
             ["/components/Alert" :refer [Alert]]
-            ["/hooks/react" :refer [useCallback useState]]))
+            ["/hooks/react" :refer [useCallback useState]]
+            ["@react-spring/parallax" :refer [Parallax ParallaxLayer]]))
 
 (defn custom-hooks-counter []
   (let [[count set-count] (useState 0)
@@ -25,7 +26,7 @@
     [:p.mx-4 "login"]]])
 
 (defn splash-page []
-  [:div.my-16
+  [:div.m-8
    [:h1.uppercase.text-5xl "Where developers"
     [:span.block " become "]
     [:strong.block.font-strong "problem solvers"]]
@@ -38,7 +39,7 @@
 
 
 (defn why-novus []
-  [:div.my-16
+  [:div.m-8
    [:div.grid.place-items-center
     [:h1.uppercase.text-2xl "Our Learning Goals"]
     [:p.italic.my-4 "The key to mastery and long term skills is focusing on principals. We designed our curriculum with the following learning goals."]]
@@ -57,7 +58,7 @@
 
 ;;
 (defn our-approach []
-  [:div.my-16
+  [:div.m-8
    [:div.grid.place-items-center
     [:h1.uppercase.text-2xl "Our Approach"]
     [:p.italic.my-4 "The key to mastery and long term skills is focusing on principals. We designed our curriculum with the following learning goals."]]
@@ -68,7 +69,7 @@
 
 
 (defn fundamentals []
-  [:div.my-16
+  [:div.m-8
    [:div.grid.place-items-center
     [:h1.uppercase.font-800.text-2xl "Core Foundations 🎓"]
     [:h3.my-4.italic "this series is about mastering the fundamentals of web development by hacking your own duolingo account, interactively"]
@@ -81,7 +82,7 @@
      [:p "prequesites: " [:strong " none"]]
      [:p "time: " [:strong "2~4 months"]]]
     [:div
-     [:h4.text-xl "Module 2 - What is Software Engineering?"]
+     [:h4.text-xl "Module 2 - What is Software Development, Really?"]
      [:p "spicyness: " [:strong "🌶️🌶️"]]
      [:p "difficulty: " [:strong "😀 💪"]]
      [:p "prequesites: " [:strong " none"]]
@@ -124,7 +125,7 @@
      [:p "time: " [:strong "2~4 months"]]]]])
 
 (defn startup-simulations []
-  [:div.my-16
+  [:div.m-8
    [:div.grid.place-items-center
     [:h1.uppercase.font-800.text-2xl "Startup Engineer Intern Series"]
     [:h3.my-4.italic.font-bold "this series simulates what a typical university student experiences in their software engineering intership journey"]
@@ -166,7 +167,7 @@
      [:p "time: " [:strong "4 months"]]]]])
 
 (defn capstone-project []
-  [:div.my-16
+  [:div.m-8
    [:div.grid.place-items-center
     [:h1.uppercase.font-800.text-2xl "Capstone Project - Building own startup"]
     [:h3.my-4.italic.font-bold "in this project, student will work with a team to come up with their own startup idea"]
@@ -176,9 +177,19 @@
 (defn main-view []
  [:div.m-12
   [nav-bar]
-  [splash-page]
-  [why-novus]
-  [our-approach]
-  [fundamentals]
-  [startup-simulations]
-  [capstone-project]])
+  [:> Parallax {:pages 6}
+   [:> ParallaxLayer {:offset 0
+                      :speed 0.3
+                      :style {:background "#f4f4f4"}}
+    [splash-page]]
+   [:> ParallaxLayer {:offset 0.9 :speed 0.2
+                      :style {:background "#e5f5f5"}}
+    [why-novus]]
+   [:> ParallaxLayer {:offset 2 :speed 0.3}
+    [our-approach]]
+   [:> ParallaxLayer {:offset 3 :speed 0.3}
+    [fundamentals]]
+   [:> ParallaxLayer {:offset 4 :speed 0.3}
+    [startup-simulations]]
+   [:> ParallaxLayer {:offset 5 :speed 0.2}
+    [capstone-project]]]])
