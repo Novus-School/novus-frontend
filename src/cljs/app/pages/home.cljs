@@ -1,4 +1,4 @@
-(ns app.view
+(ns app.pages.home
   (:require [reagent.core :as r]
             ["/components/Button" :refer [Button]]
             ["/components/Alert" :refer [Alert]]
@@ -17,11 +17,11 @@
       "Inc"]]))
 
 (defn nav-bar []
-  [:nav.mb-8.flex.justify-between.items-stretch
+  [:nav.m-8.flex.justify-between.items-stretch
    [:h1.font-600 "novus"]
    [:div.flex.grid-gap-2
-    [:p.mx-4 "principles"]
-    [:p.mx-4 "mental model"]
+    [:p.mx-4 [:a {:href "/principles"} "principles"]]
+    [:p.mx-4 [:a {:href "/mental-model"} "mental models"]]
     [:p.mx-4 "mentors"]
     [:p.mx-4 "login"]]])
 
@@ -174,22 +174,32 @@
     [:p.my-4 "Duration: " [:strong "6 months"]]]])
 
 
-(defn main-view []
- [:div.m-12
-  [nav-bar]
+(defn home-page []
+ [:<>
   [:> Parallax {:pages 6}
    [:> ParallaxLayer {:offset 0
                       :speed 0.3
                       :style {:background "#f4f4f4"}}
     [splash-page]]
-   [:> ParallaxLayer {:offset 0.9 :speed 0.2
+   [:> ParallaxLayer {:offset 0.95 :speed 1.2
                       :style {:background "#e5f5f5"}}
     [why-novus]]
-   [:> ParallaxLayer {:offset 2 :speed 0.3}
+   [:> ParallaxLayer {:offset 1.3 :speed 0.8
+                      :style {:background "teal"}}
     [our-approach]]
-   [:> ParallaxLayer {:offset 3 :speed 0.3}
+   [:> ParallaxLayer {:offset 2 :speed 0.3}
     [fundamentals]]
-   [:> ParallaxLayer {:offset 4 :speed 0.3}
+   [:> ParallaxLayer {:offset 3 :speed 0.3}
     [startup-simulations]]
-   [:> ParallaxLayer {:offset 5 :speed 0.2}
+   [:> ParallaxLayer {:offset 4 :speed 0.2}
     [capstone-project]]]])
+
+(defn main-view-old []
+ [:div.m-12
+  [nav-bar]
+  [splash-page]
+  [why-novus]
+  [our-approach]
+  [fundamentals]
+  [startup-simulations]
+  [capstone-project]])
