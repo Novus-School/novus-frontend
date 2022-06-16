@@ -1,9 +1,27 @@
 (ns app.pages.home
   (:require [reagent.core :as r]
+            [cljs.core.async.interop :refer-macros [<p!]]
+            [cljs.core.async :refer [go]]
             ["/components/Button" :refer [Button]]
             ["/components/Alert" :refer [Alert]]
             ["/hooks/react" :refer [useCallback useState]]
+            ["/services/StudentService" :refer [StudentService]]
+            ["/react_query/student/student.queries" :refer [useFetchStudents]]
             ["@react-spring/parallax" :refer [Parallax ParallaxLayer]]))
+
+
+
+(comment
+ ;; ordinary fetch + promise
+ (-> (.browse StudentService)
+     (.then (fn [res]
+              (js/console.log res))))
+ ;; Core Async Style
+ (go
+   (let [res (<p! (-> (js/fetch "http://localhost:8080/v1/students")
+                      (.then (fn [res]
+                               (.json res)))))]
+      (js/console.log res))))
 
 (defn custom-hooks-counter []
   (let [[count set-count] (useState 0)
@@ -16,26 +34,19 @@
       {:on-click set-counter}
       "Inc"]]))
 
-(defn nav-bar []
-  [:nav.m-8.flex.justify-between.items-stretch
-   [:h1.font-600 "novus"]
-   [:div.flex.grid-gap-2
-    [:p.mx-4 [:a {:href "/principles"} "principles"]]
-    [:p.mx-4 [:a {:href "/mental-model"} "mental models"]]
-    [:p.mx-4 "mentors"]
-    [:p.mx-4 "login"]]])
-
 (defn splash-page []
-  [:div.m-8
-   [:h1.uppercase.text-5xl "Where developers"
-    [:span.block " become "]
-    [:strong.block.font-strong "problem solvers"]]
-   [:div.my-8
-    [:h3.text-2xl.font-light "novus challenges and pushes curious learners through "
-     [:strong.font-medium "real life "
-      [:span.block " startup simulations and complex games"]]]
-    [:> Button {:title "Get Started"
-                :className "px-8"}]]])
+  (let [data (useFetchStudents)]
+    [:div.m-8
+     [:h1.uppercase.text-5xl "Learning is an adventure"]
+     #_[:h1.uppercase.text-5xl "Where developers"
+        [:span.block " become "]
+        [:strong.block.font-strong "problem solvers"]]
+     [:div.my-8
+      [:h3.text-2xl.font-light "novus challenges and pushes curious learners through "
+       [:strong.font-medium "real life "
+        [:span.block " startup simulations and complex games"]]]
+      [:> Button {:title "Get Started"
+                  :className "px-8"}]]]))
 
 
 (defn why-novus []
@@ -174,13 +185,13 @@
     [:p.my-4 "Duration: " [:strong "6 months"]]]])
 
 
-(defn home-page []
+(defn logged-out-page []
  [:<>
   [:> Parallax {:pages 6}
    [:> ParallaxLayer {:offset 0
                       :speed 0.3
                       :style {:background "#f4f4f4"}}
-    [splash-page]]
+    [:f> splash-page]]
    [:> ParallaxLayer {:offset 0.95 :speed 1.2
                       :style {:background "#e5f5f5"}}
     [why-novus]]
@@ -194,10 +205,20 @@
    [:> ParallaxLayer {:offset 4 :speed 0.2}
     [capstone-project]]]])
 
-(defn main-view-old []
+
+(defn logged-in-page [user]
+  [:div.md:mx-32.s:mx-16
+   [:p (str "Welcome, " (:name user))]])
+
+
+(defn home-page []
+  (if-let [user {:name "Vishal"}]
+    [logged-out-page user]
+    [logged-out-page]))
+
+(defn home-page-old []
  [:div.m-12
-  [nav-bar]
-  [splash-page]
+  [:f> splash-page]
   [why-novus]
   [our-approach]
   [fundamentals]
