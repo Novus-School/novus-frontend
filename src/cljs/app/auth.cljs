@@ -1,27 +1,25 @@
-;;
-(ns app.auth
+(ns ^{:doc "Auth Module"
+      :author "Vishal Gautam"}
+  app.auth
   (:require [reagent.core :as r]
-            ["/aws/auth" :as auth :refer [signUp]]))
+            ["/aws/auth" :as auth]))
 
-(js/console.log auth)
+
 (defonce auth-state (r/atom nil))
-(comment
-  @auth-state)
-
 
 ;; whats methods does Auth expose
 ;; Auth
 ;; 1. Sign Up
 (comment)
-(defn sign-up [{:keys [username password email]}]
+(defn sign-up! [{:keys [username password email]}]
   (-> (auth/signUp (clj->js {:username username
                              :password password
                              :email email}))
       (.then #(js/console.log %))))
 (comment
-  (sign-up {:username "vishal.gautam"
-            :password "Password1-"
-            :email "learnuidev@gmail.com"}))
+  (sign-up! {:username "vishal.gautam"
+             :password "Password1-"
+             :email "learnuidev@gmail.com"}))
 
 
 ;; 2. Resend Code
@@ -34,15 +32,15 @@
   (resend-code "vishal.gautam"))
 
 ;; 3. Confirm Signup
-(defn confirm-signup [{:keys [username code]}]
+(defn confirm-signup! [{:keys [username code]}]
   (-> (auth/confirmSignUp (clj->js {:username username
                                     :code (str code)}))
       (.then #(js/console.log %))))
 
 
 (comment
- (confirm-signup {:username "vishal.gautam"
-                  :code "296605"}))
+ (confirm-signup! {:username "vishal.gautam"
+                   :code "296605"}))
 
 ;; 4. Sign In
 (comment)

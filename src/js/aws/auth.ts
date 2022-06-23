@@ -33,11 +33,15 @@ export async function signIn ({ username, password }) {
         const userAttributes = user.attributes;
         const { refreshToken, accessToken } = user.getSignInUserSession();
 
-        return {
+        const formattedUser = {
             refreshToken: refreshToken.getToken(),
             jwtToken: accessToken.jwtToken,
             ...userAttributes,
         };
+
+        console.log('user', formattedUser);
+
+        return formattedUser;
     } catch (error) {
         console.log('error signing in', error);
     }
