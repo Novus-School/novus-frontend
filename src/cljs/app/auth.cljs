@@ -54,3 +54,15 @@
              :password "Password1-"}))
 
 ;;
+(defonce root-url "https://oqdnm8f3y6.execute-api.us-east-1.amazonaws.com/api/v1")
+
+
+
+(comment
+  @auth-state
+  (js/fetch (str root-url "/authed/me"))
+  (js/fetch "/authed/students")
+  (-> (js/fetch (str root-url "/authed/students")
+                (clj->js {:headers {:Access-Control-Allow-Origin "*"
+                                    :Authorization (:jwtToken @auth-state)}}))
+      (.then #(js/console.log %))))
