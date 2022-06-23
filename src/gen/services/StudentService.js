@@ -11,7 +11,7 @@ var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"))
 
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 
-var ROOT_URL = "http://localhost:8080/v1";
+var ROOT_URL = "http://localhost:8080/api/v1";
 var StudentService = {
   browse: function () {
     var _browse = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee() {
@@ -21,7 +21,7 @@ var StudentService = {
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return fetch("".concat(ROOT_URL, "/students"));
+              return fetch("".concat(ROOT_URL, "/authed/students"));
 
             case 2:
               students = _context.sent;

@@ -10,3 +10,4 @@ report.html
 .clj-kondo
 .vscode
 public/css/style.css
+src/cljs/app/config.cljs

@@ -2,6 +2,8 @@
   "This namespace contains your application and is the entrypoint for 'yarn start'."
   (:require [reagent.core :as r]
             [reagent.dom :as rdom]
+            [app.config]
+            [app.auth]
             ;; Layout
             [app.layout :refer [app]]
             ;; router
