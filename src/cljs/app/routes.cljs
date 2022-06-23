@@ -75,6 +75,10 @@
 (comment "takes route name and generates the route path, nil if not found"
          (rfe/href ::login))
 
+
+(comment
+  @routes-state)
+
 (defn router-start! []
   (rfe/start!
    (rf/router routes {:data {:coercion rss/coercion

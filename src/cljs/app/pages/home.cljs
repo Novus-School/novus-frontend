@@ -6,8 +6,8 @@
             ["/components/Alert" :refer [Alert]]
             ["/hooks/react" :refer [useCallback useState]]
             ["/services/StudentService" :refer [StudentService]]
-            ["/react_query/student/student.queries" :refer [useFetchStudents]]
-            ["@react-spring/parallax" :refer [Parallax ParallaxLayer]]))
+            ["/react_query/student/student.queries" :refer [useFetchStudents]]))
+            ; ["@react-spring/parallax" :refer [Parallax ParallaxLayer]]))
 
 
 
@@ -18,7 +18,7 @@
               (js/console.log res))))
  ;; Core Async Style
  (go
-   (let [res (<p! (-> (js/fetch "http://localhost:8080/v1/students")
+   (let [res (<p! (-> (js/fetch "http://localhost:8080/api/v1/students")
                       (.then (fn [res]
                                (.json res)))))]
       (js/console.log res))))
@@ -185,25 +185,34 @@
     [:p.my-4 "Duration: " [:strong "6 months"]]]])
 
 
+; (defn logged-out-page-parallax []
+;  [:<>
+;   [:> Parallax {:pages 6}
+;    [:> ParallaxLayer {:offset 0
+;                       :speed 0.3
+;                       :style {:background "#f4f4f4"}}
+;     [:f> splash-page]]
+;    [:> ParallaxLayer {:offset 0.95 :speed 1.2
+;                       :style {:background "#e5f5f5"}}
+;     [why-novus]]
+;    [:> ParallaxLayer {:offset 1.3 :speed 0.8
+;                       :style {:background "teal"}}
+;     [our-approach]]
+;    [:> ParallaxLayer {:offset 2 :speed 0.3}
+;     [fundamentals]]
+;    [:> ParallaxLayer {:offset 3 :speed 0.3}
+;     [startup-simulations]]
+;    [:> ParallaxLayer {:offset 4 :speed 0.2}
+;     [capstone-project]]]])
+
 (defn logged-out-page []
- [:<>
-  [:> Parallax {:pages 6}
-   [:> ParallaxLayer {:offset 0
-                      :speed 0.3
-                      :style {:background "#f4f4f4"}}
-    [:f> splash-page]]
-   [:> ParallaxLayer {:offset 0.95 :speed 1.2
-                      :style {:background "#e5f5f5"}}
-    [why-novus]]
-   [:> ParallaxLayer {:offset 1.3 :speed 0.8
-                      :style {:background "teal"}}
-    [our-approach]]
-   [:> ParallaxLayer {:offset 2 :speed 0.3}
-    [fundamentals]]
-   [:> ParallaxLayer {:offset 3 :speed 0.3}
-    [startup-simulations]]
-   [:> ParallaxLayer {:offset 4 :speed 0.2}
-    [capstone-project]]]])
+  [:<>
+   [:f> splash-page]
+   [why-novus]
+   [our-approach]
+   [fundamentals]
+   [startup-simulations]
+   [capstone-project]])
 
 
 (defn logged-in-page [user]

@@ -31,9 +31,12 @@
     "@babel/preset-env": "7.15.6",
     "@babel/preset-react": "7.14.5",
     "@babel/preset-typescript": "7.15.0",
+    "@babel/runtime": "^7.18.3",
     "@testing-library/dom": "^7.19.0",
     "@testing-library/react": "^10.4.3",
     "autoprefixer": "^10.4.2",
+    "aws-amplify": "^4.3.26",
+    "aws-amplify-react": "^5.1.9",
     "babel-loader": "8.2.2",
     "babel-plugin-module-resolver": "4.1.0",
     "babel-plugin-styled-components": "1.13.2",
@@ -56,16 +59,12 @@
     "zprint-clj": "~0.8.0"
   },
   "dependencies": {
-    "@babel/runtime": "7.15.4",
-    "@codesandbox/sandpack-react": "^0.13.1",
     "@headlessui/react": "^1.4.3",
     "@heroicons/react": "^1.0.5",
-    "@react-spring/parallax": "^9.4.4",
     "classnames": "^2.3.1",
     "create-react-class": "~15.6.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-query": "^3.39.1",
-    "react-spring": "^9.4.4"
+    "react-query": "^3.39.1"
   }
 }
