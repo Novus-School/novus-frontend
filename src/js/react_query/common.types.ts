@@ -1,3 +1,3 @@
 export enum QueryId {
-  students = 'students'
+    students = 'students',
 }

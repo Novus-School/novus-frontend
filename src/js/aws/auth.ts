@@ -1,16 +1,15 @@
-import { Auth } from 'aws-amplify'
+import { Auth } from 'aws-amplify';
 
-
-export async function signUp({ username, password, email, phoneNumber }) {
+export async function signUp ({ username, password, email, phoneNumber }) {
     try {
         const { user } = await Auth.signUp({
             username,
             password,
             attributes: {
-                email,                       // optional
-                phone_number: phoneNumber,   // optional - E.164 number convention
+                email, // optional
+                phone_number: phoneNumber, // optional - E.164 number convention
                 // other custom attributes
-            }
+            },
         });
         console.log(`User signed up successfully`, user);
         return user;
@@ -19,33 +18,32 @@ export async function signUp({ username, password, email, phoneNumber }) {
     }
 }
 
-export async function confirmSignUp({ username, code }) {
+export async function confirmSignUp ({ username, code }) {
     try {
-      const resp = await Auth.confirmSignUp(username, code);
-      return resp;
+        const resp = await Auth.confirmSignUp(username, code);
+        return resp;
     } catch (error) {
         console.log('error confirming sign up', error);
     }
 }
 
-
-export async function signIn({ username, password }) {
+export async function signIn ({ username, password }) {
     try {
         const user = await Auth.signIn(username, password);
-        const userAttributes = user.attributes
-        const { refreshToken, accessToken } = user.getSignInUserSession()
+        const userAttributes = user.attributes;
+        const { refreshToken, accessToken } = user.getSignInUserSession();
 
         return {
-          refreshToken: refreshToken.getToken(),
-          jwtToken: accessToken.jwtToken,
-          ...userAttributes,
-        }
+            refreshToken: refreshToken.getToken(),
+            jwtToken: accessToken.jwtToken,
+            ...userAttributes,
+        };
     } catch (error) {
         console.log('error signing in', error);
     }
 }
 
-export async function resendCode(username) {
+export async function resendCode (username) {
     try {
         const resp = await Auth.resendSignUp(username);
         console.log('code resent successfully');
@@ -55,19 +53,17 @@ export async function resendCode(username) {
     }
 }
 
-async function signOut() {
+async function signOut () {
     try {
-      const resp = await Auth.signOut({ global: true });
-      return resp;
+        const resp = await Auth.signOut({ global: true });
+        return resp;
     } catch (error) {
         console.log('error signing out: ', error);
     }
 }
 
-
-
 const auth = {
-  Auth
-}
+    Auth,
+};
 
-export { auth }
+export { auth };
