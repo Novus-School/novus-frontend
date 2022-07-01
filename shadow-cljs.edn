@@ -1,4 +1,4 @@
-{:dependencies [[reagent "0.8.1"]
+{:dependencies [[reagent "1.0.0"]
                 [devcards "0.2.6"]
                  ;; main routing lib
                 [metosin/reitit "0.5.11"]
