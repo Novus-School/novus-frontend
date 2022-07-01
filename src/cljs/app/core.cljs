@@ -4,7 +4,7 @@
             [reagent.dom :as rdom]
             ;; aws
             ["/aws/amplify" :as amplify]
-            [app.config :as config]
+            [app.config-ex :as config]
             [app.auth]
             ;; Layout
             [app.layout :refer [app]]
