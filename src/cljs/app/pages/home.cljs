@@ -222,7 +222,7 @@
 
 (defn home-page []
   (if-let [user {:name "Vishal"}]
-    [logged-out-page user]
+    [logged-in-page user]
     [logged-out-page]))
 
 (defn home-page-old []

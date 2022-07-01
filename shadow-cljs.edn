@@ -1,4 +1,10 @@
-{:deps true
+{:dependencies [[reagent "0.8.1"]
+                [devcards "0.2.6"]
+                 ;; main routing lib
+                [metosin/reitit "0.5.11"]
+                [metosin/reitit-spec  "0.5.11"]
+                [metosin/reitit-frontend "0.5.11"]]
+
  :builds
  {:app {:asset-path "/js"
         :modules {:main {:init-fn app.core/main}}
@@ -13,4 +19,5 @@
         :output-to "out/e2e.js"
         :target :node-test}}
  :dev-http {3000 "public"}
- :nrepl {:port 3333}}
+ :nrepl {:port 3333}
+ :source-paths ["src/cljs" "src/js" "src/gen"]}
