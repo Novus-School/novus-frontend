@@ -9,6 +9,7 @@ frontend:
                 - yum -y install java-1.8.0-amazon-corretto-devel
                 # Step 3: Verify Your Installation
                 - java -version
+                - yum -y install clojure
                 - yarn
         build:
             commands: [yarn build]
