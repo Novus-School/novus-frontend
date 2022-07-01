@@ -13,7 +13,8 @@
             ; [app.view :refer [main-view]]))
 
 ;; configure aws
-(amplify/configure (clj->js config/env))
+(comment
+ (amplify/configure (clj->js config/env)))
 
 ;; whats inside env
 (comment
